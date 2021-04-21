@@ -1,0 +1,84 @@
+<template>
+    <h2 v-if="!posts || posts.length === 0">Нет постов</h2>
+    <div v-else class="mdl-grid ui-cards">
+        <div v-for="(post, idx) in posts" :key="post.id" class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+            <div class="mdl-card mdl-shadow--2dp">
+                <div
+                    :style="{ background: backgroundImage(post) }"
+                    :class="removeDefImg(post)"
+                    class="mdl-card__title"
+                >
+                    <h2 class="mdl-card__title-text">{{ post.title }}</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <small v-if="post.tags.length === 0">Нет тегов!</small>
+                    <small v-else v-for="tag in post.tags" >{{ tag.title }}</small>
+
+                    {{ post.content }}
+                    <br><br>
+                    <span v-if="post.category">
+                        <b>Категория:</b> {{ post.category.title }}
+                    </span>
+                    <br>
+                    <b>Local time:</b> Thursday 9:58 PM
+                    <br>
+                    <b
+                        :data-id="post.id"
+                        @click="deletePost($event, idx)"
+                        class="post-delete"
+                    >Удалить пост</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+    data() {
+      return {
+      }
+    },
+    computed: {
+        posts () {
+          return this.$store.getters['admin/getPosts'];
+        }
+    },
+    methods: {
+        deletePost(event, idx) {
+            // const postId = parseInt(event.target.dataset.id);
+            // this.$store.dispatch('admin/deleteEl', {path: 'posts', id: postId});
+            this.$store.dispatch('admin/deleteEl', {path: 'posts', idx, event: event, arr: this.posts})
+            // this.posts.splice(idx, 1);
+        },
+        backgroundImage (post) {
+            if (post.thumbnail) {
+                return 'linear-gradient(transparent,transparent,transparent,transparent,transparent,rgba(0,0,0,.1),rgba(0,0,0,.2),rgba(0,0,0,.4)), url(/storage/' + post.thumbnail +') top center/cover no-repeat';
+            }
+            return null;
+        },
+        removeDefImg(post) {
+            if (post.thumbnail) {
+                return null;
+            }
+            return 'remove-def-bg-img';
+        }
+    },
+    mounted () {
+        console.log('posts ')
+        this.$store.dispatch('admin/loadData', 'posts');
+    },
+}
+</script>
+
+<style scoped>
+    .post-delete {
+        cursor: pointer;
+        color: darkred;
+    }
+    .remove-def-bg-img {
+        background: #333 !important;
+        height: auto !important;
+    }
+</style>
