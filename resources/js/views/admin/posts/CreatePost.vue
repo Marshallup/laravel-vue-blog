@@ -1,21 +1,31 @@
 <template>
     <AppPreloader v-if="loading"/>
-            <div v-else class="mdl-card mdl-shadow--2dp employer-form">
-                <div class="mdl-card__title">
-                    <h5 class="mdl-card__title-text text-color--white">Создание поста</h5>
-                </div>
-                <div class="mdl-card__supporting-text">
-                    <form @submit.prevent="createPost">
-<!--                    <form action="/api/posts" method="post" >-->
+    <div v-else class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
+        <div class="mdl-card mdl-shadow--2dp employer-form">
+            <div class="mdl-card__title">
+                <h5 class="mdl-card__title-text text-color--white">Создание поста</h5>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <form @submit.prevent="createPost">
+                    <!--                    <form action="/api/posts" method="post" >-->
+                    <div class="form-inputs-group">
                         <div class="form-group">
                             <label for="title">Email address</label>
                             <input autocomplete="new-title" v-model="inputs.title" name="title" type="text" class="form-control" id="title" aria-describedby="title" placeholder="Введите название поста">
                             <div v-if="errors.title" class="error">{{ errors.title[0] }}</div>
                             <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
+                        <!--                            <div class="form-group">-->
+                        <!--                                <label for="description">Описание</label>-->
+                        <!--                                <input v-model="inputs.description" name="description" type="text" class="form-control" id="description" placeholder="Описание поста">-->
+                        <!--                                <div v-if="errors.description" class="error">{{ errors.description[0] }}</div>-->
+                        <!--                            </div>-->
                         <div class="form-group">
-                            <label for="description">Описание</label>
-                            <input v-model="inputs.description" name="description" type="text" class="form-control" id="description" placeholder="Описание поста">
+                            <label>Описание</label>
+                            <AppCKEditorComponent
+                                :items="['bold', 'italic', 'link', 'undo', 'redo',]"
+                                v-model="inputs.description"
+                            />
                             <div v-if="errors.description" class="error">{{ errors.description[0] }}</div>
                         </div>
                         <div class="form-group">
@@ -30,11 +40,6 @@
                                 </div>
                             </div>
                             <div class="error" v-if="errors.thumbnail">{{ errors.thumbnail[0] }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="content">Контент</label>
-                            <input v-model="inputs.content" name="content" type="text" class="form-control" id="content" placeholder="Контент">
-                            <div v-if="errors.content" class="error">{{ errors.content[0] }}</div>
                         </div>
                         <div v-if="tags" class="form-group">
                             <label for="tag">Выберите тег</label>
@@ -52,52 +57,34 @@
                                 </option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                    </form>
-                    <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-                </div>
+                    </div>
+                    <!--                        <div class="form-group">-->
+                    <!--                            <label for="content">Контент</label>-->
+                    <!--                            <input v-model="inputs.content" name="content" type="text" class="form-control" id="content" placeholder="Контент">-->
+                    <!--                            <div v-if="errors.content" class="error">{{ errors.content[0] }}</div>-->
+                    <!--                        </div>-->
+                    <div class="form-group">
+                        <label>Контент</label>
+                        <AppCKEditorComponent v-model="inputs.content" />
+                        <div v-if="errors.content" class="error">{{ errors.content[0] }}</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+                <!--                    <ckeditor :editor="editor" v-model="inputs.content" :config="editorConfig"></ckeditor>-->
             </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import axios from "axios";
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import '@ckeditor/ckeditor5-build-classic/build/translations/ru'
-import CKFinder from '/ckfinder/ckfinder.js';
-// import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder'
+
+import AppCKEditorComponent from "../../../components/AppCKEditorComponent";
 
 export default {
     data () {
         return {
-            editor: ClassicEditor,
-            editorData: '<p>Content of the editor.</p>',
-            editorConfig: {
-                language: 'ru',
-                // plugins: [],
-                toolbar: {
-                    items: [
-                        'ckfinder',
-                        'bold',
-                        'italic',
-                        'link',
-                        'undo',
-                        'redo'
-                    ]
-                },
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                    ]
-                },
-                ckfinder: {
-                    uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-                    options: {
-                        resourceType: 'Images'
-                    },
-                    // openerMethod: 'popup'
-                }
-            },
+            editorContent: '<p>111111</p>',
             tags: null,
             categories: null,
             loading: false,
@@ -114,14 +101,14 @@ export default {
     },
     methods: {
         async createPost () {
-            // this.loading = true;
             const inputs = this.inputs;
-            // let formData = new FormData();
-            const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
-            if (response.errors) {
-                console.log(response.errors)
-                this.errors = response.errors;
-            }
+            console.log(this.inputs.content, this.inputs.description)
+
+            // const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
+            // if (response.errors) {
+            //     console.log(response.errors)
+            //     this.errors = response.errors;
+            // }
 
             // this.loading = false;
         },
@@ -135,7 +122,10 @@ export default {
         processImg(event) {
             console.log(event.target.files[0])
             this.inputs.thumbnail = event.target.files[0]
-        }
+        },
+        getDataContent(data) {
+            console.log(data)
+        },
     },
     computed: {
     },
@@ -144,17 +134,12 @@ export default {
         '$route': 'getInfoForCreatePost'
     },
     components: {
-        'ckeditor': CKEditor.component
+        AppCKEditorComponent
     },
     created () {
-        // import('/ckfinder/ckfinder.js')
         this.getInfoForCreatePost();
     },
     mounted() {
-        // require('../../../../ckfinder/ckfinder.js')
-        // require('@ckeditor/ckeditor5-ckfinder/src/ckfinder');
-        // console.log(this.editor)
-        // console.log(Array.from( this.editor.componentFactory.names()));
     },
     beforeDestroy() {
         // this.editor.destroy()
@@ -163,7 +148,14 @@ export default {
 </script>
 
 <style scoped>
-    .mdl-card__supporting-text {
-        color: black;
-    }
+.mdl-card__supporting-text {
+    color: black;
+}
+.employer-form {
+    width: auto;
+}
+.form-inputs-group {
+    margin: 0 auto;
+    max-width: 600px;
+}
 </style>

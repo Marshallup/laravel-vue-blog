@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.browserSync('laravel-vue.blog');
+mix.browserSync('laravel-vue-blog-backup.blog');
 
 // mix.styles([
 //     'resources/css/cssTemplate/linearicons.css',
