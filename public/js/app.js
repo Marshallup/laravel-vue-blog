@@ -2446,21 +2446,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   actions: {
-    loadData: function loadData(_ref, type) {
+    loadDataCreatePost: function loadDataCreatePost(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var state, dispatch, commit, rootState, response;
+        var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                state = _ref.state, dispatch = _ref.dispatch, commit = _ref.commit, rootState = _ref.rootState;
+                commit = _ref.commit;
+                commit('setLoader', true, {
+                  root: true
+                });
+                _context.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/posts/create');
+
+              case 4:
+                response = _context.sent;
+                commit('saveData', {
+                  name: 'tags',
+                  arr: response.data.tags
+                });
+                commit('saveData', {
+                  name: 'categories',
+                  arr: response.data.categories
+                });
+                commit('setLoader', false, {
+                  root: true
+                });
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    loadData: function loadData(_ref2, type) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var state, dispatch, commit, rootState, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                state = _ref2.state, dispatch = _ref2.dispatch, commit = _ref2.commit, rootState = _ref2.rootState;
                 // if (!state[type]) {
                 // console.log('ss')
                 commit('setLoader', true, {
                   root: true
                 }); // dispatch('setLoader', true, {root: true})
 
-                _context.next = 4;
+                _context2.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(type)).then(function (response) {
                   if (response.data.errors) return {
                     errors: response.data.errors
@@ -2476,7 +2512,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                response = _context.sent;
+                response = _context2.sent;
                 commit('saveData', {
                   name: type,
                   arr: response
@@ -2487,21 +2523,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
-    createTagCategory: function createTagCategory(_ref2, options) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+    createTagCategory: function createTagCategory(_ref3, options) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var state, commit, dispatch, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                state = _ref2.state, commit = _ref2.commit, dispatch = _ref2.dispatch;
-                _context2.next = 3;
+                state = _ref3.state, commit = _ref3.commit, dispatch = _ref3.dispatch;
+                _context3.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/".concat(options.path), options.inputs).then(function (response) {
                   if (response.data.errors) {
                     return {
@@ -2523,48 +2559,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                response = _context2.sent;
-                return _context2.abrupt("return", response);
+                response = _context3.sent;
+                return _context3.abrupt("return", response);
 
               case 5:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
-    createPost: function createPost(_ref3, options) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+    createPost: function createPost(_ref4, options) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var state, commit, dispatch, inputs, formData, k, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                state = _ref3.state, commit = _ref3.commit, dispatch = _ref3.dispatch;
+                state = _ref4.state, commit = _ref4.commit, dispatch = _ref4.dispatch;
                 inputs = options.inputs;
                 formData = new FormData();
-                _context3.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().keys(inputs);
+                _context4.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().keys(inputs);
 
               case 4:
-                if ((_context3.t1 = _context3.t0()).done) {
-                  _context3.next = 11;
+                if ((_context4.t1 = _context4.t0()).done) {
+                  _context4.next = 11;
                   break;
                 }
 
-                k = _context3.t1.value;
+                k = _context4.t1.value;
 
                 if (!(k === 'tag_id')) {
-                  _context3.next = 8;
+                  _context4.next = 8;
                   break;
                 }
 
-                return _context3.abrupt("continue", 4);
+                return _context4.abrupt("continue", 4);
 
               case 8:
                 formData.append(k, inputs[k]); // console.log(k, inputs[k])
 
-                _context3.next = 4;
+                _context4.next = 4;
                 break;
 
               case 11:
@@ -2572,7 +2608,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 formData.append('thumbnail', options.inputs.thumbnail); // console.log(formData.get('thumbnail'))
 
-                _context3.next = 15;
+                _context4.next = 15;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/".concat(options.path), formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -2600,32 +2636,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 15:
-                response = _context3.sent;
+                response = _context4.sent;
                 console.log(response.data);
-                return _context3.abrupt("return", response);
+                return _context4.abrupt("return", response);
 
               case 18:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
-    deleteEl: function deleteEl(_ref4, opt) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+    deleteEl: function deleteEl(_ref5, opt) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var state, dispatch, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                state = _ref4.state, dispatch = _ref4.dispatch;
+                state = _ref5.state, dispatch = _ref5.dispatch;
                 state.loading = true;
-                _context4.next = 4;
+                _context5.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/' + opt.path + '/' + parseInt(opt.event.target.dataset.id));
 
               case 4:
-                response = _context4.sent;
+                response = _context5.sent;
 
                 if (opt.path === 'tags' || opt.path === 'categories') {
                   dispatch('loadData', 'posts');
@@ -2639,10 +2675,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 9:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }))();
     }
   }

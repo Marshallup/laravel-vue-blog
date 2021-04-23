@@ -46,6 +46,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -106,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.post-delete[data-v-3cb9986c] {\n    cursor: pointer;\n    color: darkred;\n}\n.remove-def-bg-img[data-v-3cb9986c] {\n    background: #333 !important;\n    height: auto !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.post-buttons[data-v-3cb9986c] {\n    margin-top: 20px;\n    display: flex;\n    justify-content: space-between;\n}\n.post-show[data-v-3cb9986c] {\n    cursor: pointer;\n    color: green;\n}\n.post-delete[data-v-3cb9986c] {\n    cursor: pointer;\n    color: darkred;\n}\n.remove-def-bg-img[data-v-3cb9986c] {\n    background: #333 !important;\n    height: auto !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -284,11 +292,11 @@ var render = function() {
                       : _vm._l(post.tags, function(tag) {
                           return _c("small", [_vm._v(_vm._s(tag.title))])
                         }),
-                    _vm._v(
-                      "\n\n                " +
-                        _vm._s(post.content) +
-                        "\n                "
-                    ),
+                    _vm._v(" "),
+                    _c("span", {
+                      domProps: { innerHTML: _vm._s(post.description) }
+                    }),
+                    _vm._v(" "),
                     _c("br"),
                     _c("br"),
                     _vm._v(" "),
@@ -309,19 +317,34 @@ var render = function() {
                     _vm._v(" Thursday 9:58 PM\n                "),
                     _c("br"),
                     _vm._v(" "),
-                    _c(
-                      "b",
-                      {
-                        staticClass: "post-delete",
-                        attrs: { "data-id": post.id },
-                        on: {
-                          click: function($event) {
-                            return _vm.deletePost($event, idx)
+                    _c("div", { staticClass: "post-buttons" }, [
+                      _c(
+                        "b",
+                        {
+                          staticClass: "post-show",
+                          attrs: { "data-id": post.id }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Смотреть пост\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b",
+                        {
+                          staticClass: "post-delete",
+                          attrs: { "data-id": post.id },
+                          on: {
+                            click: function($event) {
+                              return _vm.deletePost($event, idx)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Удалить пост")]
-                    )
+                        },
+                        [_vm._v("Удалить пост")]
+                      )
+                    ])
                   ],
                   2
                 )

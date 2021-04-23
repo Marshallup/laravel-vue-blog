@@ -9523,7 +9523,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 ;
 
 (function () {
-  console.log('sewwww');
   "use strict";
   /**
    * @license
@@ -9553,7 +9552,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   /* exported componentHandler */
   // Pre-defining the componentHandler interface, for closure documentation and
   // static verification.
-
 
   var componentHandler = {
     /**

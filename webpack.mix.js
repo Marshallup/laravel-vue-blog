@@ -1,5 +1,10 @@
 const mix = require('laravel-mix');
-
+// const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
+// const CKEStyles = require('@ckeditor/ckeditor5-dev-utils').styles
+// const CKERegex = {
+//     svg: '/ckeditor5-[^/\]+[/\]theme[/\]icons[/\][^/\]+\.svg$/',
+//     css: '/ckeditor5-[^/\]+[/\]theme[/\].+\.css$/'
+// }
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +16,81 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.browserSync('laravel-vue-blog-backup.blog');
+mix.browserSync({
+    proxy: 'laravel-vue-blog-backup.blog',
+    open: false
+});
+
+
+// Mix.listen('configReady', webpackConfig => {
+//     const rules = webpackConfig.module.rules
+//     const targetSVG = /(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/
+//     const targetFont = /(\.(woff2?|ttf|eot|otf)$|font.*\.svg$)/
+//     const targetCSS = /\.css$/
+//
+//     // Exclude CK Editor regex from mix's default rules
+//     for (let rule of rules) {
+//         if (rule.test.toString() === targetSVG.toString()) {
+//             rule.exclude = CKERegex.svg
+//         } else if (rule.test.toString() === targetFont.toString()) {
+//             rule.exclude = CKERegex.svg
+//         } else if (rule.test.toString() === targetCSS.toString()) {
+//             rule.exclude = CKERegex.css
+//         }
+//     }
+// })
+//
+//
+//
+// mix.webpackConfig({
+//     module: {
+//         rules: [
+//             {
+//                 test: CKERegex.svg,
+//                 use: ['raw-loader']
+//             },
+//             {
+//                 test: CKERegex.css,
+//                 use: [
+//                     {
+//                         loader: 'postcss-loader',
+//                         options: {
+//                             postcssOptions: CKEStyles.getPostCssConfig({
+//                                 themeImporter: {
+//                                     themePath: './node_modules/@ckeditor/ckeditor5-theme-lark'
+//                                 },
+//                                 minify: true
+//                             })
+//                         }
+//                     }
+//                 ]
+//             }
+//         ]
+//     }
+// })
+
+
+
+
+// mix.webpackConfig(webpack => {
+//     return {
+//         plugins: [
+//             new CKEditorWebpackPlugin( {
+//                 // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+//                 language: 'en',
+//                 // addMainLanguageTranslationsToAllAssets: true,
+//                 // translationsOutputFile: /lang/
+//                 buildAllTranslationsToSeparateFiles: true,
+//                 additionalLanguages: 'all',
+//             } )
+//         ]
+//     };
+// });
+
+
+
+
+
 
 // mix.styles([
 //     'resources/css/cssTemplate/linearicons.css',

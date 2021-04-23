@@ -20,13 +20,20 @@ export default {
     },
     mutations: {
         saveData(state, data) {
-            state[data.name] = data.arr
+            state[data.name] = data.arr;
         },
         clearData(state, name) {
             state[name] = null;
         }
     },
     actions: {
+        async loadDataCreatePost({ commit }) {
+            commit('setLoader', true, {root: true});
+            const response = await axios.get('/api/posts/create');
+            commit('saveData', {name: 'tags', arr: response.data.tags});
+            commit('saveData', {name: 'categories', arr: response.data.categories})
+            commit('setLoader', false, {root: true});
+        },
         async loadData({ state, dispatch, commit, rootState }, type) {
             // if (!state[type]) {
                 // console.log('ss')

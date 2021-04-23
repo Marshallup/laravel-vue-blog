@@ -14,7 +14,7 @@
                     <small v-if="post.tags.length === 0">Нет тегов!</small>
                     <small v-else v-for="tag in post.tags" >{{ tag.title }}</small>
 
-                    {{ post.content }}
+                    <span v-html="post.description"></span>
                     <br><br>
                     <span v-if="post.category">
                         <b>Категория:</b> {{ post.category.title }}
@@ -22,11 +22,19 @@
                     <br>
                     <b>Local time:</b> Thursday 9:58 PM
                     <br>
-                    <b
-                        :data-id="post.id"
-                        @click="deletePost($event, idx)"
-                        class="post-delete"
-                    >Удалить пост</b>
+                    <div class="post-buttons">
+                        <b
+                            :data-id="post.id"
+                            class="post-show"
+                        >
+                            Смотреть пост
+                        </b>
+                        <b
+                            :data-id="post.id"
+                            @click="deletePost($event, idx)"
+                            class="post-delete"
+                        >Удалить пост</b>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,6 +81,15 @@ export default {
 </script>
 
 <style scoped>
+    .post-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .post-show {
+        cursor: pointer;
+        color: green;
+    }
     .post-delete {
         cursor: pointer;
         color: darkred;

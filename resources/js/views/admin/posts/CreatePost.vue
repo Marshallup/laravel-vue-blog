@@ -85,8 +85,8 @@ export default {
     data () {
         return {
             editorContent: '<p>111111</p>',
-            tags: null,
-            categories: null,
+            // tags: null,
+            // categories: null,
             loading: false,
             inputs: {
                 title: '',
@@ -102,22 +102,14 @@ export default {
     methods: {
         async createPost () {
             const inputs = this.inputs;
-            console.log(this.inputs.content, this.inputs.description)
 
-            // const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
-            // if (response.errors) {
-            //     console.log(response.errors)
-            //     this.errors = response.errors;
-            // }
+            const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
+            if (response.errors) {
+                console.log(response.errors)
+                this.errors = response.errors;
+            }
 
             // this.loading = false;
-        },
-        async getInfoForCreatePost() {
-            this.loading = true;
-            const response = await axios.get('/api/posts/create');
-            this.tags = response.data.tags;
-            this.categories = response.data.categories;
-            this.loading = false;
         },
         processImg(event) {
             console.log(event.target.files[0])
@@ -128,18 +120,18 @@ export default {
         },
     },
     computed: {
-    },
-    watch: {
-        // call again the method if the route changes
-        '$route': 'getInfoForCreatePost'
+        tags () {
+            return this.$store.getters['admin/getTags'];
+        },
+        categories () {
+            return this.$store.getters['admin/getCategories'];
+        }
     },
     components: {
         AppCKEditorComponent
     },
-    created () {
-        this.getInfoForCreatePost();
-    },
     mounted() {
+        this.$store.dispatch('admin/loadDataCreatePost');
     },
     beforeDestroy() {
         // this.editor.destroy()

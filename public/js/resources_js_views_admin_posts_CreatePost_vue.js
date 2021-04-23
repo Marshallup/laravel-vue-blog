@@ -96,27 +96,6 @@ __webpack_require__.r(__webpack_exports__);
             model: 'paragraph',
             title: 'Paragraph',
             "class": 'ck-heading_paragraph'
-          }, {
-            model: 'heading1',
-            view: 'h1',
-            title: 'Heading 1',
-            "class": 'ck-heading_heading1'
-          }, {
-            model: 'heading2',
-            view: 'h2',
-            title: 'Heading 2',
-            "class": 'ck-heading_heading2'
-          }, // CUSTOM HEADING
-          {
-            model: 'headingFancy',
-            view: {
-              name: 'h2',
-              classes: 'fancy'
-            },
-            title: 'Heading 2 (fancy)',
-            "class": 'ck-heading_heading2_fancy',
-            // It needs to be converted before the standard 'heading2'.
-            converterPriority: 'high'
           }]
         },
         ckfinder: {
@@ -265,8 +244,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       editorContent: '<p>111111</p>',
-      tags: null,
-      categories: null,
+      // tags: null,
+      // categories: null,
       loading: false,
       inputs: {
         title: '',
@@ -284,52 +263,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var inputs;
+        var inputs, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 inputs = _this.inputs;
-                console.log(_this.inputs.content, _this.inputs.description); // const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
-                // if (response.errors) {
-                //     console.log(response.errors)
-                //     this.errors = response.errors;
-                // }
-                // this.loading = false;
+                _context.next = 3;
+                return _this.$store.dispatch('admin/createPost', {
+                  path: 'posts',
+                  inputs: inputs
+                });
 
-              case 2:
+              case 3:
+                response = _context.sent;
+
+                if (response.errors) {
+                  console.log(response.errors);
+                  _this.errors = response.errors;
+                } // this.loading = false;
+
+
+              case 5:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
-      }))();
-    },
-    getInfoForCreatePost: function getInfoForCreatePost() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.loading = true;
-                _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/posts/create');
-
-              case 3:
-                response = _context2.sent;
-                _this2.tags = response.data.tags;
-                _this2.categories = response.data.categories;
-                _this2.loading = false;
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
       }))();
     },
     processImg: function processImg(event) {
@@ -340,18 +300,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(data);
     }
   },
-  computed: {},
-  watch: {
-    // call again the method if the route changes
-    '$route': 'getInfoForCreatePost'
+  computed: {
+    tags: function tags() {
+      return this.$store.getters['admin/getTags'];
+    },
+    categories: function categories() {
+      return this.$store.getters['admin/getCategories'];
+    }
   },
   components: {
     AppCKEditorComponent: _components_AppCKEditorComponent__WEBPACK_IMPORTED_MODULE_2__.default
   },
-  created: function created() {
-    this.getInfoForCreatePost();
+  mounted: function mounted() {
+    this.$store.dispatch('admin/loadDataCreatePost');
   },
-  mounted: function mounted() {},
   beforeDestroy: function beforeDestroy() {// this.editor.destroy()
   }
 });
