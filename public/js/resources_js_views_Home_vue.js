@@ -146,251 +146,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "PostsComponent.vue"
+  name: "PostsComponent.vue",
+  computed: {
+    posts: function posts() {
+      // this.$store.dispatch('loadData', 'posts');
+      return this.$store.getters['getPosts'];
+    }
+  },
+  mounted: function mounted() {// console.log('main page');
+    // this.$store.dispatch('loadData', 'posts');
+    // console.log(this.posts)
+  }
 });
 
 /***/ }),
@@ -831,578 +598,300 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "col-lg-8" }, [
+    !_vm.posts
+      ? _c("div", [_vm._v("Нет постов!")])
+      : _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-6 col-md-6" },
+            _vm._l(_vm.posts, function(post, idx) {
+              return idx % 2 === 0
+                ? _c("div", { staticClass: "single-amenities" }, [
+                    _c("div", { staticClass: "amenities-thumb" }, [
+                      _c("img", {
+                        staticClass: "img-fluid w-100",
+                        attrs: { src: post.thumbnail, alt: "" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "amenities-details" }, [
+                      _c(
+                        "h5",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "Show-post",
+                                  params: { slug: post.slug }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(post.title) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "amenities-meta mb-10" }, [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _c("span", { staticClass: "ti-calendar" }),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm._f("dateFormat_Do_MMMM_YYYY")(
+                                  post.created_at
+                                )
+                              ) +
+                              "\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ]),
+                      _vm._v(" "),
+                      _c("p", {
+                        domProps: { innerHTML: _vm._s(post.description) }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-between mt-20" },
+                        [
+                          _vm._m(1, true),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "category" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("span", { staticClass: "ti-folder mr-1" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(post.category.title) +
+                                  "\n                            "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-lg-6 col-md-6" },
+            _vm._l(_vm.posts, function(post, idx) {
+              return idx % 2 !== 0
+                ? _c("div", { staticClass: "single-amenities" }, [
+                    _c("div", { staticClass: "amenities-thumb" }, [
+                      _c("img", {
+                        staticClass: "img-fluid w-100",
+                        attrs: { src: post.thumbnail, alt: "" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "amenities-details" }, [
+                      _c(
+                        "h5",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "Show-post",
+                                  params: { slug: post.slug }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(post.title) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "amenities-meta mb-10" }, [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _c("span", { staticClass: "ti-calendar" }),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm._f("dateFormat_Do_MMMM_YYYY")(
+                                  post.created_at
+                                )
+                              ) +
+                              "\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2, true)
+                      ]),
+                      _vm._v(" "),
+                      _c("p", {
+                        domProps: { innerHTML: _vm._s(post.description) }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-between mt-20" },
+                        [
+                          _vm._m(3, true),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "category" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("span", { staticClass: "ti-folder mr-1" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(post.category.title) +
+                                  "\n                            "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            }),
+            0
+          )
+        ]),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-8" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-6 col-md-6" }, [
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post1.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "There's goting to be a musical about meghan\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
+    return _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
+      _c("span", { staticClass: "ti-comment" }),
+      _vm._v("05")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("a", { staticClass: "blog-post-btn", attrs: { href: "#" } }, [
+        _vm._v(
+          "\n                                Читать\n                                "
+        ),
+        _c("span", { staticClass: "ti-arrow-right" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
+      _c("span", { staticClass: "ti-comment" }),
+      _vm._v("05")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("a", { staticClass: "blog-post-btn", attrs: { href: "#" } }, [
+        _vm._v("\n                                Читать "),
+        _c("span", { staticClass: "ti-arrow-right" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c(
+          "nav",
+          { staticClass: "blog-pagination justify-content-center d-flex" },
+          [
+            _c("ul", { staticClass: "pagination" }, [
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#", "aria-label": "Previous" }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _c("span", { staticClass: "ti-arrow-left" })
+                    ])
+                  ]
                 )
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
+              _c("li", { staticClass: "page-item" }, [
+                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                  _vm._v("01")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item active" }, [
+                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                  _vm._v("02")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                  _vm._v("03")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                  _vm._v("04")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                  _vm._v("09")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#", "aria-label": "Next" }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _c("span", { staticClass: "ti-arrow-right" })
                     ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post3.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "Forest responds to consultation smoking in al\n                            fresco."
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018\n                        ")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05\n                        ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
+                  ]
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post5.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "There's goting to be a musical about meghan\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post7.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "Forest responds to consultation smoking in al\n                            fresco."
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018\n                        ")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05\n                        ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-6 col-md-6" }, [
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post2.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "There's goting to be a musical about meghan\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post4.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "Forest responds to consultation smoking in al\n                            fresco."
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018\n                        ")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05\n                        ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post6.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "There's goting to be a musical about meghan\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "single-amenities" }, [
-            _c("div", { staticClass: "amenities-thumb" }, [
-              _c("img", {
-                staticClass: "img-fluid w-100",
-                attrs: { src: "img/blog-post/blog-post8.jpg", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "amenities-details" }, [
-              _c("h5", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(
-                    "Forest responds to consultation smoking in al\n                            fresco."
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "amenities-meta mb-10" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-calendar" }),
-                  _vm._v("20th Nov, 2018\n                        ")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "ml-20", attrs: { href: "#" } }, [
-                  _c("span", { staticClass: "ti-comment" }),
-                  _vm._v("05\n                        ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                        Creepeth green light appear let rule only you're divide\n                        and lights moving and isn't given creeping deep.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "d-flex justify-content-between mt-20" },
-                [
-                  _c("div", [
-                    _c(
-                      "a",
-                      { staticClass: "blog-post-btn", attrs: { href: "#" } },
-                      [
-                        _vm._v("\n                                Read More "),
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "category" }, [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("span", { staticClass: "ti-folder mr-1" }),
-                      _vm._v(" Travel\n                            ")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c(
-            "nav",
-            { staticClass: "blog-pagination justify-content-center d-flex" },
-            [
-              _c("ul", { staticClass: "pagination" }, [
-                _c("li", { staticClass: "page-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "page-link",
-                      attrs: { href: "#", "aria-label": "Previous" }
-                    },
-                    [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _c("span", { staticClass: "ti-arrow-left" })
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item" }, [
-                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                    _vm._v("01")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item active" }, [
-                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                    _vm._v("02")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item" }, [
-                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                    _vm._v("03")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item" }, [
-                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                    _vm._v("04")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item" }, [
-                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                    _vm._v("09")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "page-link",
-                      attrs: { href: "#", "aria-label": "Next" }
-                    },
-                    [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _c("span", { staticClass: "ti-arrow-right" })
-                      ])
-                    ]
-                  )
-                ])
               ])
-            ]
-          )
-        ])
+            ])
+          ]
+        )
       ])
     ])
   }

@@ -56,6 +56,7 @@
                                     {{ category }}
                                 </option>
                             </select>
+                            <div v-if="errors.category_id" class="error">{{ errors.category_id[0] }}</div>
                         </div>
                     </div>
                     <!--                        <div class="form-group">-->
@@ -84,9 +85,6 @@ import AppCKEditorComponent from "../../../components/AppCKEditorComponent";
 export default {
     data () {
         return {
-            editorContent: '<p>111111</p>',
-            // tags: null,
-            // categories: null,
             loading: false,
             inputs: {
                 title: '',
@@ -102,11 +100,21 @@ export default {
     methods: {
         async createPost () {
             const inputs = this.inputs;
+            console.log(inputs)
 
             const response = await this.$store.dispatch('admin/createPost', { path: 'posts', inputs })
             if (response.errors) {
                 console.log(response.errors)
                 this.errors = response.errors;
+            } else {
+                console.log('yes')
+                for (const input in this.inputs) {
+                    if (input === 'tag_id') {
+                        inputs[input] = [];
+                    } else {
+                        inputs[input] = '';
+                    }
+                }
             }
 
             // this.loading = false;
@@ -132,9 +140,6 @@ export default {
     },
     mounted() {
         this.$store.dispatch('admin/loadDataCreatePost');
-    },
-    beforeDestroy() {
-        // this.editor.destroy()
     },
 }
 </script>

@@ -72,36 +72,38 @@ export default {
     name: "TheHomeSlider.vue",
     mounted() {
         // -------   Owl Carousel -----//
-        // function home_banner_slider() {
-        //     if ($(".home-banner-owl").length) {
-        //         $(".home-banner-owl").owlCarousel({
-        //             loop: true,
-        //             margin: 10,
-        //             items: 1,
-        //             nav: true,
-        //             autoplay: 2500,
-        //             smartSpeed: 1500,
-        //             dots: true,
-        //             responsiveClass: true,
-        //             stagePadding: 140,
-        //             navText: [
-        //                 "<img src='img/prev.png' alt='' />",
-        //                 "<img src='img/next.png' alt='' />"
-        //             ],
-        //             responsive: {
-        //                 0: {
-        //                     margin: 0,
-        //                     stagePadding: 0
-        //                 },
-        //                 1299: {
-        //                     margin: 10,
-        //                     stagePadding: 140
-        //                 }
-        //             }
-        //         });
-        //     }
-        // }
-        // home_banner_slider();
+        function home_banner_slider() {
+            if ($(".home-banner-owl").length) {
+                if ($(".home-banner-owl").owlCarousel) {
+                    $(".home-banner-owl").owlCarousel({
+                        loop: true,
+                        margin: 10,
+                        items: 1,
+                        nav: true,
+                        autoplay: 2500,
+                        smartSpeed: 1500,
+                        dots: true,
+                        responsiveClass: true,
+                        stagePadding: 140,
+                        navText: [
+                            "<img src='img/prev.png' alt='' />",
+                            "<img src='img/next.png' alt='' />"
+                        ],
+                        responsive: {
+                            0: {
+                                margin: 0,
+                                stagePadding: 0
+                            },
+                            1299: {
+                                margin: 10,
+                                stagePadding: 140
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        home_banner_slider();
     }
 }
 </script>

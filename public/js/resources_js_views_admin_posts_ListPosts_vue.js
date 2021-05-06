@@ -54,6 +54,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -76,7 +80,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     backgroundImage: function backgroundImage(post) {
       if (post.thumbnail) {
-        return 'linear-gradient(transparent,transparent,transparent,transparent,transparent,rgba(0,0,0,.1),rgba(0,0,0,.2),rgba(0,0,0,.4)), url(/storage/' + post.thumbnail + ') top center/cover no-repeat';
+        return 'linear-gradient(transparent,transparent,transparent,transparent,transparent,rgba(0,0,0,.1),rgba(0,0,0,.2),rgba(0,0,0,.4)), url(' + post.thumbnail + ') top center/cover no-repeat';
       }
 
       return null;
@@ -317,34 +321,52 @@ var render = function() {
                     _vm._v(" Thursday 9:58 PM\n                "),
                     _c("br"),
                     _vm._v(" "),
-                    _c("div", { staticClass: "post-buttons" }, [
-                      _c(
-                        "b",
-                        {
-                          staticClass: "post-show",
-                          attrs: { "data-id": post.id }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Смотреть пост\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b",
-                        {
-                          staticClass: "post-delete",
-                          attrs: { "data-id": post.id },
-                          on: {
-                            click: function($event) {
-                              return _vm.deletePost($event, idx)
+                    _c(
+                      "div",
+                      { staticClass: "post-buttons" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "AdminSinglePost",
+                                params: { slug: post.slug }
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("Удалить пост")]
-                      )
-                    ])
+                          },
+                          [
+                            _c(
+                              "b",
+                              {
+                                staticClass: "post-show",
+                                attrs: { "data-id": post.id }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            Смотреть пост\n                        "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b",
+                          {
+                            staticClass: "post-delete",
+                            attrs: { "data-id": post.id },
+                            on: {
+                              click: function($event) {
+                                return _vm.deletePost($event, idx)
+                              }
+                            }
+                          },
+                          [_vm._v("Удалить пост")]
+                        )
+                      ],
+                      1
+                    )
                   ],
                   2
                 )

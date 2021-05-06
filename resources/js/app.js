@@ -40,7 +40,15 @@ Vue.component('AdminMessage', require('./components/AdminMessage').default);
 Vue.filter('dateFormat_MM/DD/YYYY_hh:mm', function (value) {
     if (!value) return '';
     return moment(String(value)).format('DD.MM.YYYY hh:mm');
-})
+});
+Vue.filter('dateFormat_Do_MMMM_YYYY', function (value) {
+    if (!value) return '';
+    return moment(String(value)).format('Do MMMM, YYYY');
+});
+Vue.filter('dateFormat_DD_MMM_YYYY_HH_mm_A', function (value) {
+    if (!value) return '';
+    return moment(String(value)).format('DD MMM, YYYY HH:mm A');
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

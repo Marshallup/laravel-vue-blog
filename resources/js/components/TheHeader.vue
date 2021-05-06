@@ -45,7 +45,7 @@
                                     <router-link class="nav-link" :to="{name: 'createPost'}">Создать пост</router-link>
                                 </li>
                                 <li>
-                                    <router-link :to="{ name: 'Post' }">Пост</router-link>
+<!--                                    <router-link :to="{ name: 'Post' }">Пост</router-link>-->
                                 </li>
                                 <!-- Dropdown -->
                                 <!-- <li class="nav-item dropdown">

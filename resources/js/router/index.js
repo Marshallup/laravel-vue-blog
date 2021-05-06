@@ -4,6 +4,7 @@ import store from '../store';
 
 const Home = () => import('../views/Home');
 // import PostLayout from "../views/layouts/PostLayout";
+const PostLayout = () => import('../views/layouts/PostLayout');
 const NotFound = () => import('../views/NotFound');
 
 const AdminTemplate = () => import('../views/templates/AdminTemplate');
@@ -17,8 +18,10 @@ const AdminShowTags = () => import('../views/admin/tags/ListTags');
 const AdminCreateTag = () => import('../views/admin/tags/CreateTag');
 const AdminCreateCategory = () => import('../views/admin/categories/CreateCategory');
 const AdminShowCategories = () => import('../views/admin/categories/ListCategories');
+const AdminSinglePost = () => import('../views/admin/posts/SinglePost');
 
 const HomeLayout = () => import('../views/layouts/HomeLayout');
+// const SinglePost = () => import('../views/SinglePost');
 
 Vue.use(VueRouter);
 
@@ -43,19 +46,26 @@ const routes = [
                         component: Home
 
                     }
+                ],
+
+            },
+            {
+                path: 'post/',
+                name: 'Post-layout',
+                component: PostLayout,
+                meta: {
+                    layout: 'post',
+                    template: 'blog'
+                },
+                children: [
+                    {
+                        path: ':slug',
+                        name: 'Show-post',
+                        component: SinglePost,
+                    }
                 ]
-            }
+            },
         ]
-    },
-    {
-        path: '/post',
-        component: SinglePost,
-        // component: PostLayout,
-        name: 'Post',
-        meta: {
-            layout: 'post',
-            template: 'blog'
-        }
     },
     // {
     //     path: '/post/create',
@@ -103,6 +113,11 @@ const routes = [
               component: AdminShowPosts
             },
             {
+              path: 'post/:slug',
+              name: 'AdminSinglePost',
+              component: AdminSinglePost
+            },
+            {
                 path: 'createPost',
                 name: 'createPost',
                 component: AdminCreatePost
@@ -143,6 +158,14 @@ const routes = [
 const router = new VueRouter({
     mode: "history",
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    // console.log(to)
+    if (to.name === 'Home') {
+        store.dispatch('loadData', 'posts');
+    }
+    next();
 })
 
 export default router;

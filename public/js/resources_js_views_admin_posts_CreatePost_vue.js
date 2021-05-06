@@ -238,14 +238,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      editorContent: '<p>111111</p>',
-      // tags: null,
-      // categories: null,
       loading: false,
       inputs: {
         title: '',
@@ -263,28 +261,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var inputs, response;
+        var inputs, response, input;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 inputs = _this.inputs;
-                _context.next = 3;
+                console.log(inputs);
+                _context.next = 4;
                 return _this.$store.dispatch('admin/createPost', {
                   path: 'posts',
                   inputs: inputs
                 });
 
-              case 3:
+              case 4:
                 response = _context.sent;
 
                 if (response.errors) {
                   console.log(response.errors);
                   _this.errors = response.errors;
+                } else {
+                  console.log('yes');
+
+                  for (input in _this.inputs) {
+                    if (input === 'tag_id') {
+                      inputs[input] = [];
+                    } else {
+                      inputs[input] = '';
+                    }
+                  }
                 } // this.loading = false;
 
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -313,8 +322,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.$store.dispatch('admin/loadDataCreatePost');
-  },
-  beforeDestroy: function beforeDestroy() {// this.editor.destroy()
   }
 });
 
@@ -843,7 +850,13 @@ var render = function() {
                               )
                             }),
                             0
-                          )
+                          ),
+                          _vm._v(" "),
+                          _vm.errors.category_id
+                            ? _c("div", { staticClass: "error" }, [
+                                _vm._v(_vm._s(_vm.errors.category_id[0]))
+                              ])
+                            : _vm._e()
                         ])
                       : _vm._e()
                   ]),

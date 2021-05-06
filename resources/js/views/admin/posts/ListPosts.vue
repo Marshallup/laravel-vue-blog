@@ -23,12 +23,16 @@
                     <b>Local time:</b> Thursday 9:58 PM
                     <br>
                     <div class="post-buttons">
-                        <b
-                            :data-id="post.id"
-                            class="post-show"
+                        <router-link
+                            :to="{name: 'AdminSinglePost', params: {slug: post.slug}}"
                         >
-                            Смотреть пост
-                        </b>
+                            <b
+                                :data-id="post.id"
+                                class="post-show"
+                            >
+                                Смотреть пост
+                            </b>
+                        </router-link>
                         <b
                             :data-id="post.id"
                             @click="deletePost($event, idx)"
@@ -62,7 +66,7 @@ export default {
         },
         backgroundImage (post) {
             if (post.thumbnail) {
-                return 'linear-gradient(transparent,transparent,transparent,transparent,transparent,rgba(0,0,0,.1),rgba(0,0,0,.2),rgba(0,0,0,.4)), url(/storage/' + post.thumbnail +') top center/cover no-repeat';
+                return 'linear-gradient(transparent,transparent,transparent,transparent,transparent,rgba(0,0,0,.1),rgba(0,0,0,.2),rgba(0,0,0,.4)), url(' + post.thumbnail +') top center/cover no-repeat';
             }
             return null;
         },

@@ -208,8 +208,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "SinglePost"
+  name: "SinglePost",
+  computed: {
+    post: function post() {
+      return this.$store.getters['getPost'];
+    }
+  },
+  beforeMount: function beforeMount() {
+    // console.log(this.$route);
+    window.scrollTo(0, 0);
+    this.$store.dispatch('loadSingle', {
+      name: 'post',
+      type: 'posts',
+      slug: this.$route.params.slug
+    });
+  }
 });
 
 /***/ }),
@@ -302,151 +323,126 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg-8" }, [
-    _c(
-      "ul",
-      [
-        _c("router-link", { attrs: { to: { name: "createPost" } } }, [
-          _vm._v("Создать пост")
+  return !_vm.post
+    ? _c("div", { staticClass: "col-lg-8" }, [_vm._v("Пост не найден!")])
+    : _c("div", { staticClass: "col-lg-8" }, [
+        _c("div", { staticClass: "main_blog_details" }, [
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.post.thumbnail, alt: "" }
+          }),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "#" } }, [
+            _c("h4", [
+              _vm._v(
+                "\n                        " +
+                  _vm._s(_vm.post.title) +
+                  "\n                    "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "user_details" }, [
+            _vm.post.tags
+              ? _c(
+                  "div",
+                  { staticClass: "float-left" },
+                  _vm._l(_vm.post.tags, function(tag) {
+                    return _c("a", { key: tag.id, attrs: { href: "#" } }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(tag.title) +
+                          "\n                        "
+                      )
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mt-sm-0 mt-3" }, [
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-body" }, [
+                  _c("h5", [_vm._v("Mark wiens")]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("dateFormat_DD_MMM_YYYY_HH_mm_A")(
+                          _vm.post.created_at
+                        )
+                      )
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "post-content",
+            domProps: { innerHTML: _vm._s(_vm.post.content) }
+          }),
+          _vm._v(" "),
+          _vm._m(1)
         ]),
         _vm._v(" "),
-        _c("br"),
+        _vm._m(2),
         _vm._v(" "),
-        _c("router-link", { attrs: { to: { name: "createCategory" } } }, [
-          _vm._v("Создать категорию")
-        ]),
+        _vm._m(3),
         _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("router-link", { attrs: { to: { name: "createTag" } } }, [
-          _vm._v("Создать тег")
-        ]),
-        _vm._v(" "),
-        _c("router-link", { attrs: { to: { name: "Post" } } }, [_vm._v("Пост")])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _vm._m(3)
-  ])
+        _vm._m(4)
+      ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main_blog_details" }, [
-      _c("img", {
-        staticClass: "img-fluid",
-        attrs: { src: "/img/blog/news-blog.jpg", alt: "" }
-      }),
-      _vm._v(" "),
+    return _c("div", { staticClass: "d-flex" }, [
+      _c("img", { attrs: { src: "/img/blog/user-img.jpg", alt: "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "news_d_footer flex-column flex-sm-row" }, [
       _c("a", { attrs: { href: "#" } }, [
-        _c("h4", [
-          _vm._v("Cartridge Is Better Than Ever "),
-          _c("br"),
-          _vm._v(" A Discount Toner")
-        ])
+        _c("i", { staticClass: "lnr lnr lnr-heart" }),
+        _vm._v("Lily and 4 people like this")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "user_details" }, [
-        _c("div", { staticClass: "float-left" }, [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Lifestyle")]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Gadget")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mt-sm-0 mt-3" }, [
-          _c("div", { staticClass: "media" }, [
-            _c("div", { staticClass: "media-body" }, [
-              _c("h5", [_vm._v("Mark wiens")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("12 Dec, 2017 11:21 am")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "d-flex" }, [
-              _c("img", { attrs: { src: "/img/blog/user-img.jpg", alt: "" } })
-            ])
-          ])
-        ])
-      ]),
+      _c(
+        "a",
+        {
+          staticClass: "justify-content-sm-center ml-sm-auto mt-sm-0 mt-2",
+          attrs: { href: "#" }
+        },
+        [_c("i", { staticClass: "lnr lnr lnr-bubble" }), _vm._v("06 Comments")]
+      ),
       _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually sit through a self-imposed MCSE training."
-        )
-      ]),
-      _vm._v(" "),
-      _c("blockquote", { staticClass: "blockquote" }, [
-        _c("p", { staticClass: "mb-0" }, [
-          _vm._v(
-            "MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training."
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower"
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "news_d_footer flex-column flex-sm-row" }, [
+      _c("div", { staticClass: "news_socail ml-sm-auto mt-sm-0 mt-2" }, [
         _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "lnr lnr lnr-heart" }),
-          _vm._v("Lily and 4 people like this")
+          _c("i", { staticClass: "fa fa-facebook" })
         ]),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "justify-content-sm-center ml-sm-auto mt-sm-0 mt-2",
-            attrs: { href: "#" }
-          },
-          [
-            _c("i", { staticClass: "lnr lnr lnr-bubble" }),
-            _vm._v("06 Comments")
-          ]
-        ),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fa fa-twitter" })
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "news_socail ml-sm-auto mt-sm-0 mt-2" }, [
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-facebook" })
-          ]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-twitter" })
-          ]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-youtube-play" })
-          ]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-pinterest" })
-          ]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-rss" })
-          ])
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fa fa-youtube-play" })
+        ]),
+        _vm._v(" "),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fa fa-pinterest" })
+        ]),
+        _vm._v(" "),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fa fa-rss" })
         ])
       ])
     ])
@@ -551,7 +547,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", { staticClass: "comment" }, [
                   _vm._v(
-                    "\n                                Never say goodbye till the end comes!\n                            "
+                    "\n                                    Never say goodbye till the end comes!\n                                "
                   )
                 ])
               ])
@@ -594,7 +590,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", { staticClass: "comment" }, [
                   _vm._v(
-                    "\n                                Never say goodbye till the end comes!\n                            "
+                    "\n                                    Never say goodbye till the end comes!\n                                "
                   )
                 ])
               ])
@@ -635,7 +631,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", { staticClass: "comment" }, [
                   _vm._v(
-                    "\n                                Never say goodbye till the end comes!\n                            "
+                    "\n                                    Never say goodbye till the end comes!\n                                "
                   )
                 ])
               ])
@@ -676,7 +672,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", { staticClass: "comment" }, [
                   _vm._v(
-                    "\n                                Never say goodbye till the end comes!\n                            "
+                    "\n                                    Never say goodbye till the end comes!\n                                "
                   )
                 ])
               ])
@@ -717,7 +713,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", { staticClass: "comment" }, [
                   _vm._v(
-                    "\n                                Never say goodbye till the end comes!\n                            "
+                    "\n                                    Never say goodbye till the end comes!\n                                "
                   )
                 ])
               ])

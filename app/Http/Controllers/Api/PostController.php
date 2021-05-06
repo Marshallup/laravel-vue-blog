@@ -52,6 +52,7 @@ class PostController extends Controller
             [
                 'title' => 'required',
                 'content' => 'required',
+                'category_id' => 'required',
                 'thumbnail' => 'nullable|image'
             ]
         );
@@ -59,6 +60,7 @@ class PostController extends Controller
         if ($data->hasFile('thumbnail')) {
             $date = date('d-m-Y');
             $thumbnail = $data->file('thumbnail')->store('images/posts/' . $date);
+            $thumbnail = '/storage/' . $thumbnail;
         }
 
         if ($validator->fails()) {
@@ -69,6 +71,7 @@ class PostController extends Controller
             'title' => $data->title,
             'description' => $data->description,
             'content' => $data->content,
+            'category_id' => $data->category_id,
             'thumbnail' => $thumbnail ?? null
         ]);
 
@@ -82,9 +85,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+//        return $id;
+//        return Post::find($slug);
+//        return 'sdsd';
+//        return $id;
+        return Post::where('slug', $slug)->with('tags')->first();
+//        return Post::find($id);
     }
 
     /**

@@ -94,6 +94,7 @@ export default {
                     if (response.data.errors) {
                         return {errors: response.data.errors}
                     }
+                    commit('saveData', {name: 'posts', arr: null}, {root: true});
                     dispatch('setMessage', response.data, {root: true})
 
                     // dispatch('loadData', options.path);

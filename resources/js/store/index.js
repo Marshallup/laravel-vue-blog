@@ -16,7 +16,9 @@ const store = new Vuex.Store({
         timerMessage: null,
         tags: null,
         categories: null,
-        loading: false
+        loading: false,
+        posts: false,
+        post: false
     },
     getters: {
         getTags (state) {
@@ -24,11 +26,22 @@ const store = new Vuex.Store({
         },
         getCategories(state) {
             return state.categories;
+        },
+        getPosts(state) {
+            // console.log(state)
+            return state.posts;
+        },
+        getPost(state) {
+            return state.post;
         }
     },
     mutations: {
-        saveData(state, response) {
-            state[response.type] = response.data
+        saveData(state, data) {
+            // console.log(data)
+            state[data.name] = data.arr;
+        },
+        clearData(state, name) {
+            state[name] = null;
         },
         setLoader(state, status) {
             state.loading = status;
@@ -42,36 +55,46 @@ const store = new Vuex.Store({
         },
         clearMessage(state) {
             state.message = null;
-        }
+        },
     },
     actions: {
-        // async loadData({ state, dispatch }, type) {
-        //     this.loading = true;
-        //     const response = await axios.get(`/api/${type}`)
-        //         .then(response => {
-        //             if (response.data.errors) return {errors: response.data.errors};
-        //             // dispatch('setMessage', response.data);
-        //             return response.data;
-        //         })
-        //         .catch(error => {
-        //             console.log(error.response.data);
-        //             // state.message = error.response.data.message;
-        //             dispatch('setMessage', error.response.data.message);
-        //             return 'error';
-        //             }
-        //         );
-        //     this.loading = false;
-        //     return response;
-        //     // const data = response.data;
-        //     // commit('saveData', {data, 'type': type});
-        // },
-        // async loadTagsAndCategories({ commit }) {
-        //     // await setTimeout( () => {
-        //     const response = await axios.get('/api/posts/create');
-        //     commit('saveTagsAndCategories', response.data)
-        //     // }, 5000)
-        //
-        // },
+        async loadData({ state, dispatch, commit, rootState }, type) {
+            // if (!state[type]) {
+            commit('setLoader', true, {root: true})
+            // dispatch('setLoader', true, {root: true})
+            const response = await axios.get(`/api/${type}`)
+                .then(response => {
+                    if (response.data.errors) return {errors: response.data.errors};
+                    // console.log(response)
+                    return response.data;
+                })
+                .catch(error => {
+                        console.log(error.response.data);
+                        dispatch('setMessage', error.response.data.message, { root: true });
+                        return 'error';
+                    }
+                );
+            commit('saveData', {name: type, arr: response});
+            commit('setLoader', false, {root: true})
+        },
+        async loadSingle({commit, dispatch}, info) {
+            commit('setLoader', true, {root: true});
+
+            const response = await axios.get(`/api/${info.type}/${info.slug}`)
+                .then(response => {
+                    if (response.data.errors) return {errors: response.data.errors};
+                    // console.log(response)
+                    commit('saveData', {name: info.name, arr: response.data});
+                    return response.data;
+                })
+                .catch(error => {
+                        console.log(error.response.data);
+                        dispatch('setMessage', error.response.data.message, { root: true });
+                        return 'error';
+                    }
+                );
+            commit('setLoader', false, {root: true})
+        },
         async setMessage({state, commit}, message) {
             commit('setMessage', message);
 
@@ -83,33 +106,6 @@ const store = new Vuex.Store({
                 commit('clearMessage')
             }, 5000)
         },
-        // async createPostTagCategory({ state, dispatch }, options) {
-        //     const response = await axios.post(`/api/${options.path}`, options.inputs)
-        //         .then(response => {
-        //             if (response.data.errors) {
-        //                 return {errors: response.data.errors}
-        //             }
-        //             dispatch('setMessage', response.data)
-        //             return response
-        //         })
-        //         .catch(error => {
-        //                 console.log(error.response.data)
-        //                 state.message = error.response.data.message;
-        //                 dispatch('setMessage', error.response.data.message)
-        //                 return 'error';
-        //             }
-        //         );
-        //     // console.log(response, 'index');
-        //     return response;
-        // },
-        // async deleteEl({ state, dispatch }, opt) {
-        //     state.loading = true;
-        //     console.log(opt)
-        //     const response = await axios.delete('/api/' + opt.path + '/' + parseInt(opt.event.target.dataset.id));
-        //     state.loading = false;
-        //     await dispatch('setMessage', response.data);
-        //     opt.arr.splice(opt.idx, 1);
-        // }
     },
     modules: {
         admin,

@@ -1,25 +1,35 @@
 <template>
-    <div class="col-lg-8">
-        <ul>
-            <router-link :to="{ name: 'createPost'}" >Создать пост</router-link> <br>
-            <router-link :to="{ name: 'createCategory'}" >Создать категорию</router-link> <br>
-            <router-link :to="{ name: 'createTag'}" >Создать тег</router-link>
-            <router-link :to="{ name: 'Post' }">Пост</router-link>
+    <div v-if="!post" class="col-lg-8">Пост не найден!</div>
+    <div v-else class="col-lg-8">
+<!--        <ul>-->
+<!--            <router-link :to="{ name: 'createPost'}" >Создать пост</router-link> <br>-->
+<!--            <router-link :to="{ name: 'createCategory'}" >Создать категорию</router-link> <br>-->
+<!--            <router-link :to="{ name: 'createTag'}" >Создать тег</router-link>-->
+<!--            <router-link :to="{ name: 'Post' }">Пост</router-link>-->
 
-        </ul>
+<!--        </ul>-->
             <div class="main_blog_details">
-                <img class="img-fluid" src="/img/blog/news-blog.jpg" alt="">
-                <a href="#"><h4>Cartridge Is Better Than Ever <br /> A Discount Toner</h4></a>
+                <img class="img-fluid" :src="post.thumbnail" alt="">
+                <a href="#">
+                    <h4>
+                        {{ post.title }}
+                    </h4>
+                </a>
                 <div class="user_details">
-                    <div class="float-left">
-                        <a href="#">Lifestyle</a>
-                        <a href="#">Gadget</a>
+                    <div v-if="post.tags" class="float-left">
+                        <a
+                            v-for="tag in post.tags"
+                            :key="tag.id"
+                            href="#"
+                        >
+                            {{ tag.title }}
+                        </a>
                     </div>
                     <div class="float-right mt-sm-0 mt-3">
                         <div class="media">
                             <div class="media-body">
                                 <h5>Mark wiens</h5>
-                                <p>12 Dec, 2017 11:21 am</p>
+                                <p>{{ post.created_at | dateFormat_DD_MMM_YYYY_HH_mm_A }}</p>
                             </div>
                             <div class="d-flex">
                                 <img src="/img/blog/user-img.jpg" alt="">
@@ -27,13 +37,10 @@
                         </div>
                     </div>
                 </div>
-                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower</p>
-                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually sit through a self-imposed MCSE training.</p>
-                <blockquote class="blockquote">
-                    <p class="mb-0">MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training.</p>
-                </blockquote>
-                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower</p>
-                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower</p>
+
+                <div v-html="post.content" class="post-content"></div>
+
+
                 <div class="news_d_footer flex-column flex-sm-row">
                     <a href="#"><i class="lnr lnr lnr-heart"></i>Lily and 4 people like this</a>
                     <a class="justify-content-sm-center ml-sm-auto mt-sm-0 mt-2" href="#"><i class="lnr lnr lnr-bubble"></i>06 Comments</a>
@@ -197,7 +204,21 @@
 
 <script>
 export default {
-    name: "SinglePost"
+    name: "SinglePost",
+    computed: {
+      post () {
+          return this.$store.getters['getPost'];
+      }
+    },
+    beforeMount() {
+        // console.log(this.$route);
+        window.scrollTo(0,0);
+        this.$store.dispatch('loadSingle', {
+            name: 'post',
+            type: 'posts',
+            slug: this.$route.params.slug
+        })
+    }
 }
 </script>
 

@@ -261,7 +261,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                                Удалить\r\n                            "
+                                "\n                                Удалить\n                            "
                               )
                             ]
                           )
