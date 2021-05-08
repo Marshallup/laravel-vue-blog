@@ -103,44 +103,31 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="blog-pagination justify-content-center d-flex">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Previous">
-                                  <span aria-hidden="true">
-                                      <span class="ti-arrow-left"></span>
-                                  </span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a href="#" class="page-link">01</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">02</a></li>
-                        <li class="page-item"><a href="#" class="page-link">03</a></li>
-                        <li class="page-item"><a href="#" class="page-link">04</a></li>
-                        <li class="page-item"><a href="#" class="page-link">09</a></li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Next">
-                                  <span aria-hidden="true">
-                                      <span class="ti-arrow-right"></span>
-                                  </span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <AppPagination
+         :cur_page="cur_page"
+         :last_page="last_page"
+        ></AppPagination>
     </div>
 </template>
 
 <script>
+import AppPagination from "./AppPagination";
 export default {
     name: "PostsComponent.vue",
     computed: {
         posts () {
             // this.$store.dispatch('loadData', 'posts');
             return this.$store.getters['getPosts'];
+        },
+        cur_page () {
+            return this.$store.state['cur_page'];
+        },
+        last_page () {
+            return this.$store.state['last_page'];
         }
+    },
+    components: {
+        AppPagination
     },
     mounted () {
         // console.log('main page');

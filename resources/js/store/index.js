@@ -18,7 +18,9 @@ const store = new Vuex.Store({
         categories: null,
         loading: false,
         posts: false,
-        post: false
+        post: false,
+        cur_page: 1,
+        last_page: 1
     },
     getters: {
         getTags (state) {
@@ -56,8 +58,37 @@ const store = new Vuex.Store({
         clearMessage(state) {
             state.message = null;
         },
+        setCurrentPage(state, page) {
+            state.cur_page = page;
+        },
+        setLastPage(state, page) {
+            state.last_page = page;
+        }
     },
     actions: {
+        async getPostsMainPage({commit, dispatch}, obj) {
+            commit('setLoader', true, {root: true});
+            let pageQuery = 'page=1';
+            if (obj.page) {
+                pageQuery = 'page=' + obj.page;
+            }
+            const response = await axios.get(`/api/${obj.path}?${pageQuery}`)
+                .then(response => {
+                    if (response.data.errors) return {errors: response.data.errors};
+                    console.log(response.data)
+                    commit('setCurrentPage', response.data.current_page);
+                    commit('setLastPage', response.data.last_page);
+                    return response.data.data;
+                })
+                .catch(error => {
+                        console.log(error.response.data);
+                        dispatch('setMessage', error.response.data.message, { root: true });
+                        return 'error';
+                    }
+                );
+            commit('saveData', {name: obj.type, arr: response});
+            commit('setLoader', false, {root: true});
+        },
         async loadData({ state, dispatch, commit, rootState }, type) {
             // if (!state[type]) {
             commit('setLoader', true, {root: true})

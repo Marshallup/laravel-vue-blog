@@ -2261,7 +2261,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
 router.beforeEach(function (to, from, next) {
   // console.log(to)
   if (to.name === 'Home') {
-    _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('loadData', 'posts');
+    _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('getPostsMainPage', {
+      type: 'posts',
+      path: 'posts/getPostsMainPage',
+      page: to.query.page
+    });
   }
 
   next();
@@ -2311,7 +2315,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
     categories: null,
     loading: false,
     posts: false,
-    post: false
+    post: false,
+    cur_page: 1,
+    last_page: 1
   },
   getters: {
     getTags: function getTags(state) {
@@ -2348,23 +2354,81 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
     },
     clearMessage: function clearMessage(state) {
       state.message = null;
+    },
+    setCurrentPage: function setCurrentPage(state, page) {
+      state.cur_page = page;
+    },
+    setLastPage: function setLastPage(state, page) {
+      state.last_page = page;
     }
   },
   actions: {
-    loadData: function loadData(_ref, type) {
+    getPostsMainPage: function getPostsMainPage(_ref, obj) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var state, dispatch, commit, rootState, response;
+        var commit, dispatch, pageQuery, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                state = _ref.state, dispatch = _ref.dispatch, commit = _ref.commit, rootState = _ref.rootState;
+                commit = _ref.commit, dispatch = _ref.dispatch;
+                commit('setLoader', true, {
+                  root: true
+                });
+                pageQuery = 'page=1';
+
+                if (obj.page) {
+                  pageQuery = 'page=' + obj.page;
+                }
+
+                _context.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(obj.path, "?").concat(pageQuery)).then(function (response) {
+                  if (response.data.errors) return {
+                    errors: response.data.errors
+                  };
+                  console.log(response.data);
+                  commit('setCurrentPage', response.data.current_page);
+                  commit('setLastPage', response.data.last_page);
+                  return response.data.data;
+                })["catch"](function (error) {
+                  console.log(error.response.data);
+                  dispatch('setMessage', error.response.data.message, {
+                    root: true
+                  });
+                  return 'error';
+                });
+
+              case 6:
+                response = _context.sent;
+                commit('saveData', {
+                  name: obj.type,
+                  arr: response
+                });
+                commit('setLoader', false, {
+                  root: true
+                });
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    loadData: function loadData(_ref2, type) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var state, dispatch, commit, rootState, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                state = _ref2.state, dispatch = _ref2.dispatch, commit = _ref2.commit, rootState = _ref2.rootState;
                 // if (!state[type]) {
                 commit('setLoader', true, {
                   root: true
                 }); // dispatch('setLoader', true, {root: true})
 
-                _context.next = 4;
+                _context2.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(type)).then(function (response) {
                   if (response.data.errors) return {
                     errors: response.data.errors
@@ -2380,7 +2444,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
                 });
 
               case 4:
-                response = _context.sent;
+                response = _context2.sent;
                 commit('saveData', {
                   name: type,
                   arr: response
@@ -2391,24 +2455,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
 
               case 7:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
-    loadSingle: function loadSingle(_ref2, info) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+    loadSingle: function loadSingle(_ref3, info) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var commit, dispatch, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref2.commit, dispatch = _ref2.dispatch;
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
                 commit('setLoader', true, {
                   root: true
                 });
-                _context2.next = 4;
+                _context3.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(info.type, "/").concat(info.slug)).then(function (response) {
                   if (response.data.errors) return {
                     errors: response.data.errors
@@ -2428,27 +2492,27 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
                 });
 
               case 4:
-                response = _context2.sent;
+                response = _context3.sent;
                 commit('setLoader', false, {
                   root: true
                 });
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
-    setMessage: function setMessage(_ref3, message) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+    setMessage: function setMessage(_ref4, message) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var state, commit, timer;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                state = _ref3.state, commit = _ref3.commit;
+                state = _ref4.state, commit = _ref4.commit;
                 commit('setMessage', message);
                 timer = state.timerMessage;
 
@@ -2462,10 +2526,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     }
   },

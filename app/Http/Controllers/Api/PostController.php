@@ -24,6 +24,14 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    public function getPostsMainPage()
+    {
+        $posts = Post::with('category', 'tags')->paginate(2);
+        return response()->json($posts);
+//        echo 'wwwww';
+//        return 'sdsd';
+    }
+
     /**
      * Show the form for creating a new resource.
      *

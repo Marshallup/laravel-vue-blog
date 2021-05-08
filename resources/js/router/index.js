@@ -163,7 +163,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // console.log(to)
     if (to.name === 'Home') {
-        store.dispatch('loadData', 'posts');
+        store.dispatch('getPostsMainPage', {type: 'posts', path: 'posts/getPostsMainPage', page: to.query.page});
     }
     next();
 })

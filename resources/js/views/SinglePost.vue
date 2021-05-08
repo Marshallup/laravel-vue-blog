@@ -217,7 +217,7 @@ export default {
             name: 'post',
             type: 'posts',
             slug: this.$route.params.slug
-        })
+        });
     }
 }
 </script>

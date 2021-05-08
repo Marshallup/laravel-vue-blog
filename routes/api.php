@@ -15,9 +15,10 @@ use \App\Http\Controllers\Api\CategoryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('tags/getAllTags', [TagController::class, 'getAllTags'])->name('getAllTags');
+Route::get('posts/getPostsMainPage', [PostController::class, 'getPostsMainPage'])->name('posts.getPostsMainPage');
 
 Route::resource('posts', PostController::class);
-Route::get('tags/getAllTags', [TagController::class, 'getAllTags'])->name('getAllTags');
 Route::resource('tags', TagController::class);
 Route::resource('categories', CategoryController::class);
 
