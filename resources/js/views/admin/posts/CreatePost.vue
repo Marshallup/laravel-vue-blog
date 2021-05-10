@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 import AppCKEditorComponent from "../../../components/AppCKEditorComponent";
 
@@ -145,14 +144,5 @@ export default {
 </script>
 
 <style scoped>
-.mdl-card__supporting-text {
-    color: black;
-}
-.employer-form {
-    width: auto;
-}
-.form-inputs-group {
-    margin: 0 auto;
-    max-width: 600px;
-}
+
 </style>

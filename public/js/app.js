@@ -2008,6 +2008,10 @@ Vue.filter('dateFormat_DD_MMM_YYYY_HH_mm_A', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value)).format('DD MMM, YYYY HH:mm A');
 });
+Vue.filter('dateFormat_dddd_H_mm_A', function (value) {
+  if (!value) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value)).format('dddd H:mm A');
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -2260,14 +2264,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
 });
 router.beforeEach(function (to, from, next) {
   // console.log(to)
-  if (to.name === 'Home') {
-    _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('getPostsMainPage', {
-      type: 'posts',
-      path: 'posts/getPostsMainPage',
-      page: to.query.page
-    });
-  }
-
+  // if (to.name === 'Home') {
+  //     store.dispatch('getPostsMainPage', {type: 'posts', path: 'posts/getPostsMainPage', page: to.query.page});
+  // }
   next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -2292,6 +2291,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _modules_admin_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/admin.module */ "./resources/js/store/modules/admin.module.js");
+/* harmony import */ var _modules_sidebar_categories_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/sidebar/categories.module */ "./resources/js/store/modules/sidebar/categories.module.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2304,6 +2304,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default); // import post from './modules/post.module';
 // import tag from './modules/tag.module';
 // const admin = () => import('./modules/admin.module');
+
 
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
@@ -2384,8 +2385,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(obj.path, "?").concat(pageQuery)).then(function (response) {
                   if (response.data.errors) return {
                     errors: response.data.errors
-                  };
-                  console.log(response.data);
+                  }; // console.log(response.data)
+
                   commit('setCurrentPage', response.data.current_page);
                   commit('setLastPage', response.data.last_page);
                   return response.data.data;
@@ -2405,7 +2406,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
                 });
                 commit('setLoader', false, {
                   root: true
-                });
+                }); // console.log(response)
 
               case 9:
               case "end":
@@ -2534,7 +2535,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
     }
   },
   modules: {
-    admin: _modules_admin_module__WEBPACK_IMPORTED_MODULE_4__.default // post,
+    admin: _modules_admin_module__WEBPACK_IMPORTED_MODULE_4__.default,
+    sidebarCategories: _modules_sidebar_categories_module__WEBPACK_IMPORTED_MODULE_5__.default // post,
     // tag
 
   }
@@ -2831,6 +2833,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/sidebar/categories.module.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/store/modules/sidebar/categories.module.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: {
+    categories: null
+  },
+  getters: {
+    getCategories: function getCategories(state) {
+      return state.categories;
+    }
+  },
+  mutations: {
+    saveCategories: function saveCategories(state, response) {
+      state.categories = response;
+    }
+  },
+  actions: {
+    loadCategories: function loadCategories(_ref, type) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/categories/getPopularCategories').then(function (res) {
+                  return res.data;
+                })["catch"](function (res) {
+                  return null;
+                });
+
+              case 3:
+                response = _context.sent;
+                commit('saveCategories', response); // console.log(response, 'cat');
+                // const data = response.data;
+                // commit('saveData', {data, 'type': type});
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
       }))();
     }
   }
@@ -61123,7 +61197,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("keep-alive", [_c("router-view")], 1)
+  return _c("router-view")
 }
 var staticRenderFns = []
 render._withStripped = true

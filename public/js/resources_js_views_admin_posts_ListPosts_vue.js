@@ -69,14 +69,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deletePost: function deletePost(event, idx) {
-      // const postId = parseInt(event.target.dataset.id);
-      // this.$store.dispatch('admin/deleteEl', {path: 'posts', id: postId});
       this.$store.dispatch('admin/deleteEl', {
         path: 'posts',
         idx: idx,
         event: event,
         arr: this.posts
-      }); // this.posts.splice(idx, 1);
+      });
     },
     backgroundImage: function backgroundImage(post) {
       if (post.thumbnail) {
@@ -317,8 +315,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
-                    _c("b", [_vm._v("Local time:")]),
-                    _vm._v(" Thursday 9:58 PM\n                "),
+                    _c("b", [_vm._v("Дата создания:")]),
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          _vm._f("dateFormat_dddd_H_mm_A")(post.created_at)
+                        ) +
+                        "\n                "
+                    ),
                     _c("br"),
                     _vm._v(" "),
                     _c(

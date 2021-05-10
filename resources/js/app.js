@@ -49,6 +49,10 @@ Vue.filter('dateFormat_DD_MMM_YYYY_HH_mm_A', function (value) {
     if (!value) return '';
     return moment(String(value)).format('DD MMM, YYYY HH:mm A');
 });
+Vue.filter('dateFormat_dddd_H_mm_A', function (value) {
+    if (!value) return '';
+    return moment(String(value)).format('dddd H:mm A');
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

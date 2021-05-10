@@ -102,4 +102,10 @@ class CategoryController extends Controller
         $category->delete();
         return "Категория - '$categoryTitle' успешно удалена!";
     }
+
+    public function getPopularCategories()
+    {
+        return Category::withCount('posts')->orderBy('posts_count', 'desc')->get(3);
+//        return Category::with('posts')->all();
+    }
 }

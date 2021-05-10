@@ -17,6 +17,7 @@ use \App\Http\Controllers\Api\CategoryController;
 */
 Route::get('tags/getAllTags', [TagController::class, 'getAllTags'])->name('getAllTags');
 Route::get('posts/getPostsMainPage', [PostController::class, 'getPostsMainPage'])->name('posts.getPostsMainPage');
+Route::get('categories/getPopularCategories', [CategoryController::class, 'getPopularCategories'])->name('categories.getPopularCategories');
 
 Route::resource('posts', PostController::class);
 Route::resource('tags', TagController::class);

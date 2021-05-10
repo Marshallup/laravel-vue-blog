@@ -1,5 +1,7 @@
 <template>
-    <ckeditor :editor="editor" v-model="editorContent" :config="editorConfig"></ckeditor>
+    <div class="ck-editor-wrap">
+        <ckeditor :editor="editor" v-model="editorContent" :config="editorConfig"></ckeditor>
+    </div>
 </template>
 
 <script>
@@ -91,5 +93,7 @@ export default {
 </script>
 
 <style scoped>
-
+.ck-editor-wrap {
+    color: black;
+}
 </style>

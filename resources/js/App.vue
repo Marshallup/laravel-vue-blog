@@ -1,9 +1,9 @@
 <template>
-    <keep-alive>
+<!--    <keep-alive>-->
 <!--        <component v-if="template" :is="template + '-template'"></component>-->
 <!--        <NotFound v-else />-->
         <router-view></router-view>
-    </keep-alive>
+<!--    </keep-alive>-->
 </template>
 
 <script>

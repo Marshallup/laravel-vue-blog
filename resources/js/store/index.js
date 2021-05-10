@@ -8,6 +8,7 @@ Vue.use(Vuex);
 // import tag from './modules/tag.module';
 // const admin = () => import('./modules/admin.module');
 import admin from './modules/admin.module';
+import sidebarCategories from './modules/sidebar/categories.module';
 
 const store = new Vuex.Store({
     state: {
@@ -75,7 +76,7 @@ const store = new Vuex.Store({
             const response = await axios.get(`/api/${obj.path}?${pageQuery}`)
                 .then(response => {
                     if (response.data.errors) return {errors: response.data.errors};
-                    console.log(response.data)
+                    // console.log(response.data)
                     commit('setCurrentPage', response.data.current_page);
                     commit('setLastPage', response.data.last_page);
                     return response.data.data;
@@ -88,6 +89,7 @@ const store = new Vuex.Store({
                 );
             commit('saveData', {name: obj.type, arr: response});
             commit('setLoader', false, {root: true});
+            // console.log(response)
         },
         async loadData({ state, dispatch, commit, rootState }, type) {
             // if (!state[type]) {
@@ -140,6 +142,7 @@ const store = new Vuex.Store({
     },
     modules: {
         admin,
+        sidebarCategories
         // post,
         // tag
     }

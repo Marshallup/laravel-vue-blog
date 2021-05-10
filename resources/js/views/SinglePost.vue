@@ -223,5 +223,11 @@ export default {
 </script>
 
 <style scoped>
-
+.employer-form {
+    width: auto;
+}
+.form-inputs-group {
+    margin: 0 auto;
+    max-width: 600px;
+}
 </style>

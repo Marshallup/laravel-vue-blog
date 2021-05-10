@@ -17,7 +17,7 @@ const mix = require('laravel-mix');
  */
 
 mix.browserSync({
-    proxy: 'laravel-vue-blog.loc',
+    proxy: 'laravel-vue-blog.local',
     open: false
 });
 

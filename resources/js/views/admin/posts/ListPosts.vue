@@ -20,7 +20,7 @@
                         <b>Категория:</b> {{ post.category.title }}
                     </span>
                     <br>
-                    <b>Local time:</b> Thursday 9:58 PM
+                    <b>Дата создания:</b> {{ post.created_at | dateFormat_dddd_H_mm_A }}
                     <br>
                     <div class="post-buttons">
                         <router-link
@@ -59,10 +59,7 @@ export default {
     },
     methods: {
         deletePost(event, idx) {
-            // const postId = parseInt(event.target.dataset.id);
-            // this.$store.dispatch('admin/deleteEl', {path: 'posts', id: postId});
             this.$store.dispatch('admin/deleteEl', {path: 'posts', idx, event: event, arr: this.posts})
-            // this.posts.splice(idx, 1);
         },
         backgroundImage (post) {
             if (post.thumbnail) {
