@@ -64,8 +64,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
- // import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

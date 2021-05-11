@@ -7,40 +7,36 @@
             </div>
             <div class="mdl-card__supporting-text">
                 <form @submit.prevent="createPost">
-                    <!--                    <form action="/api/posts" method="post" >-->
                     <div class="form-inputs-group">
                         <div class="form-group">
-                            <label for="title">Email address</label>
+                            <label for="title">Название поста</label>
                             <input autocomplete="new-title" v-model="inputs.title" name="title" type="text" class="form-control" id="title" aria-describedby="title" placeholder="Введите название поста">
-                            <div v-if="errors.title" class="error">{{ errors.title[0] }}</div>
-                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <div v-if="errors.title" class="error">
+                                {{ errors.title[0] }}
+                            </div>
+
+<!--                            <small class="form-text text-muted">-->
+<!--                                We'll never share your email with anyone else.-->
+<!--                            </small>-->
                         </div>
-                        <!--                            <div class="form-group">-->
-                        <!--                                <label for="description">Описание</label>-->
-                        <!--                                <input v-model="inputs.description" name="description" type="text" class="form-control" id="description" placeholder="Описание поста">-->
-                        <!--                                <div v-if="errors.description" class="error">{{ errors.description[0] }}</div>-->
-                        <!--                            </div>-->
                         <div class="form-group">
-                            <label>Описание</label>
+                            <label>Краткое описание</label>
+
                             <AppCKEditorComponent
                                 :items="['bold', 'italic', 'link', 'undo', 'redo',]"
                                 v-model="inputs.description"
                             />
-                            <div v-if="errors.description" class="error">{{ errors.description[0] }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Выберите изображение</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input @change="processImg($event)" type="file" class="custom-file-input" id="inputGroupFile02">
-                                    <label style="margin-top: 0;" class="custom-file-label" for="inputGroupFile02">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
+
+                            <div v-if="errors.description" class="error">
+                                {{ errors.description[0] }}
                             </div>
-                            <div class="error" v-if="errors.thumbnail">{{ errors.thumbnail[0] }}</div>
                         </div>
+
+                        <TheInputThumbnail
+                            v-on:process-img="processImg"
+                            :error="errors"
+                        />
+
                         <div v-if="tags" class="form-group">
                             <label for="tag">Выберите тег</label>
                             <select multiple v-model="inputs.tag_id" name="tag_id[]" class="form-control" id="tag">
@@ -59,11 +55,6 @@
                             <div v-if="errors.category_id" class="error">{{ errors.category_id[0] }}</div>
                         </div>
                     </div>
-                    <!--                        <div class="form-group">-->
-                    <!--                            <label for="content">Контент</label>-->
-                    <!--                            <input v-model="inputs.content" name="content" type="text" class="form-control" id="content" placeholder="Контент">-->
-                    <!--                            <div v-if="errors.content" class="error">{{ errors.content[0] }}</div>-->
-                    <!--                        </div>-->
                     <div class="form-group">
                         <label>Контент</label>
                         <AppCKEditorComponent v-model="inputs.content" />
@@ -71,7 +62,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
-                <!--                    <ckeditor :editor="editor" v-model="inputs.content" :config="editorConfig"></ckeditor>-->
             </div>
         </div>
     </div>
@@ -79,6 +69,7 @@
 
 <script>
 
+import TheInputThumbnail from "../../../components/elements/TheInputThumbnail";
 import AppCKEditorComponent from "../../../components/AppCKEditorComponent";
 
 export default {
@@ -118,13 +109,12 @@ export default {
 
             // this.loading = false;
         },
-        processImg(event) {
-            console.log(event.target.files[0])
-            this.inputs.thumbnail = event.target.files[0]
-        },
         getDataContent(data) {
             console.log(data)
         },
+        processImg (val) {
+            this.inputs.thumbnail = val;
+        }
     },
     computed: {
         tags () {
@@ -135,6 +125,7 @@ export default {
         }
     },
     components: {
+        TheInputThumbnail,
         AppCKEditorComponent
     },
     mounted() {

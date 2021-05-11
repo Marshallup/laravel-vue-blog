@@ -7,8 +7,6 @@
 <script>
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
 import '@ckeditor/ckeditor5-build-classic/build/translations/ru'
 
 export default {
