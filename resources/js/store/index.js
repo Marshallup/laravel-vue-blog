@@ -18,7 +18,7 @@ const store = new Vuex.Store({
         tags: null,
         categories: null,
         loading: false,
-        posts: false,
+        posts: [],
         post: false,
         cur_page: 1,
         last_page: 1
@@ -40,7 +40,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         saveData(state, data) {
-            // console.log(data)
+            console.log(data, 'saveData')
             state[data.name] = data.arr;
         },
         clearData(state, name) {
@@ -67,7 +67,7 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        async getPostsMainPage({commit, dispatch}, obj) {
+        async getListsElements({commit, dispatch}, obj) {
             commit('setLoader', true, {root: true});
             let pageQuery = 'page=1';
             if (obj.page) {
@@ -76,7 +76,7 @@ const store = new Vuex.Store({
             const response = await axios.get(`/api/${obj.path}?${pageQuery}`)
                 .then(response => {
                     if (response.data.errors) return {errors: response.data.errors};
-                    // console.log(response.data)
+                    console.log(response.data, 'store')
                     commit('setCurrentPage', response.data.current_page);
                     commit('setLastPage', response.data.last_page);
                     return response.data.data;

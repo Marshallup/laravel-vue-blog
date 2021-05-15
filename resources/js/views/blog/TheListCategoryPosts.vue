@@ -1,11 +1,11 @@
 <template>
     <div class="col-lg-8">
-        <div v-if="!posts || !posts.length">Нет постов!</div>
+        <div v-if="!categories || !categories.length">Нет постов!</div>
         <div v-else>
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div
-                        v-for="(post, idx) in posts"
+                        v-for="(post, idx) in categories[0].posts"
                         class="single-amenities"
                         v-if="idx % 2 === 0"
                     >
@@ -47,9 +47,11 @@
                                     </router-link>
                                 </div>
                                 <div class="category">
-                                    <a href="#">
-                                        <span class="ti-folder mr-1"></span> {{ post.category.title }}
-                                    </a>
+                                    <router-link
+                                        :to="{ name: 'TheListCategoryPosts', params: { slug: categories[0].slug} }"
+                                    >
+                                        <span class="ti-folder mr-1"></span> {{ categories[0].title }}
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +59,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div
-                        v-for="(post, idx) in posts"
+                        v-for="(post, idx) in categories[0].posts"
                         class="single-amenities"
                         v-if="idx % 2 !== 0"
                     >
@@ -97,14 +99,13 @@
                                     >
                                         Читать <span class="ti-arrow-right"></span>
                                     </router-link>
-<!--                                    <a href="#" class="blog-post-btn">-->
-<!--                                        Читать <span class="ti-arrow-right"></span>-->
-<!--                                    </a>-->
                                 </div>
                                 <div class="category">
-                                    <a href="#">
-                                        <span class="ti-folder mr-1"></span> {{ post.category.title }}
-                                    </a>
+                                    <router-link
+                                        :to="{ name: 'TheListCategoryPosts', params: { slug: categories[0].slug} }"
+                                    >
+                                        <span class="ti-folder mr-1"></span> {{ categories[0].title }}
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -114,21 +115,22 @@
 
             <AppPagination
                 v-if="last_page > 1"
-             :cur_page="cur_page"
-             :last_page="last_page"
+                :cur_page="cur_page"
+                :last_page="last_page"
             ></AppPagination>
         </div>
     </div>
 </template>
 
 <script>
-import AppPagination from "./AppPagination";
+import AppPagination from "../../components/AppPagination";
+// import ListsElementsComponent from "../components/ListsElementsComponent";
+
 export default {
-    name: "PostsComponent.vue",
     computed: {
-        posts () {
-            // this.$store.dispatch('loadData', 'posts');
-            return this.$store.getters['getPosts'];
+        categories () {
+            console.log(this.$store.getters['getCategories'], 'sssss')
+            return this.$store.getters['getCategories'];
         },
         cur_page () {
             return this.$store.state['cur_page'];
@@ -140,17 +142,10 @@ export default {
     components: {
         AppPagination
     },
-    mounted () {
-        // console.log(this.$route)
-        this.$store.dispatch('getPostsMainPage', {type: 'posts', path: 'posts/getPostsMainPage', page: this.$route.query.page});
-        // console.log('main page');
-
-
-        // this.$store.dispatch('loadData', 'posts');
-
-
-        // console.log(this.posts)
-    },
+    beforeMount() {
+        this.$store.dispatch('getListsElements', {type: 'categories', path: 'categories/getCategoryPosts/' + this.$route.params.slug, page: this.$route.query.page});
+        console.log(this.elements, 'categ')
+    }
 }
 </script>
 

@@ -11,7 +11,20 @@
                         </a>
                     </li>
                     <li v-for="page in last_page" :key="page" class="page-item">
-                        <router-link :to="{name: 'Home', query: {'page' : page}}" class="page-link">{{ page }}</router-link>
+                        <a
+                            @click.prevent="initPagination(page)"
+                            :href="'?page=' + page"
+                            class="page-link"
+                        >
+                            {{ page }}
+                        </a>
+<!--                        <router-link-->
+<!--                            :to="{name: 'Home', query: {'page' : page}}"-->
+<!--                            @click="initPagination(page)"-->
+<!--                            class="page-link"-->
+<!--                        >-->
+<!--                            {{ page }}-->
+<!--                        </router-link>-->
                     </li>
 <!--                    <li class="page-item active"><a href="#" class="page-link">02</a></li>-->
 <!--                    <li class="page-item"><a href="#" class="page-link">03</a></li>-->
@@ -41,7 +54,11 @@ export default {
           type: Number,
       }
     },
-    name: "AppPagination"
+    methods: {
+        initPagination(page) {
+            console.log(page)
+        }
+    }
 }
 </script>
 

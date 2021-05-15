@@ -212,7 +212,6 @@ export default {
     },
     beforeMount() {
         // console.log(this.$route);
-        window.scrollTo(0,0);
         this.$store.dispatch('loadSingle', {
             name: 'post',
             type: 'posts',

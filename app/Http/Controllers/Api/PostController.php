@@ -95,12 +95,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-//        return $id;
-//        return Post::find($slug);
-//        return 'sdsd';
-//        return $id;
         return Post::where('slug', $slug)->with('tags')->first();
-//        return Post::find($id);
     }
 
     /**

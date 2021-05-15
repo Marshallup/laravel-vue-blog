@@ -269,10 +269,8 @@ __webpack_require__.r(__webpack_exports__);
     // HomeLayout,
     'HomeLayout': function HomeLayout() {
       return __webpack_require__.e(/*! import() */ "resources_js_views_layouts_HomeLayout_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../layouts/HomeLayout */ "./resources/js/views/layouts/HomeLayout.vue"));
-    },
-    'PostLayout': function PostLayout() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_layouts_PostLayout_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../layouts/PostLayout */ "./resources/js/views/layouts/PostLayout.vue"));
-    } // PostLayout
+    } // 'PostLayout': () => import('../layouts/PostLayout'),
+    // PostLayout
 
   },
   computed: {

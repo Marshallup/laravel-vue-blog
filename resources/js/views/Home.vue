@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <!-- Start Blog Posts -->
-                <posts-component></posts-component>
+                <the-list-posts></the-list-posts>
                 <!-- End Blog Posts -->
 
                 <!-- Start Blog Post Siddebar -->
@@ -17,14 +17,14 @@
 
 <script>
 import SidebarComponent from "../components/SidebarComponent";
-import PostsComponent from "../components/PostsComponent";
+import TheListPosts from "../views/blog/TheListPost";
 
 export default {
     name: "Home.vue",
     components: {
         SidebarComponent,
-        PostsComponent
-    }
+        TheListPosts
+    },
 }
 </script>
 

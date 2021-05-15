@@ -2096,8 +2096,8 @@ var Home = function Home() {
 }; // import PostLayout from "../views/layouts/PostLayout";
 
 
-var PostLayout = function PostLayout() {
-  return __webpack_require__.e(/*! import() */ "resources_js_views_layouts_PostLayout_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/layouts/PostLayout */ "./resources/js/views/layouts/PostLayout.vue"));
+var LayoutWithBanner = function LayoutWithBanner() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_layouts_LayoutWithBanner_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/layouts/LayoutWithBanner */ "./resources/js/views/layouts/LayoutWithBanner.vue"));
 };
 
 var NotFound = function NotFound() {
@@ -2150,7 +2150,8 @@ var AdminSinglePost = function AdminSinglePost() {
 
 var HomeLayout = function HomeLayout() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_layouts_HomeLayout_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/layouts/HomeLayout */ "./resources/js/views/layouts/HomeLayout.vue"));
-}; // const SinglePost = () => import('../views/SinglePost');
+}; // const CategoryPosts = () => import('../views/Category-posts');
+// const SinglePost = () => import('../views/SinglePost');
 
 
 vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_2__.default);
@@ -2172,44 +2173,34 @@ var routes = [{
       component: Home
     }]
   }, {
-    path: 'post/',
-    name: 'Post-layout',
-    component: PostLayout,
+    path: 'post-:slug',
+    name: 'Show-post',
+    component: LayoutWithBanner,
     meta: {
-      layout: 'post',
-      template: 'blog'
-    },
-    children: [{
-      path: ':slug',
-      name: 'Show-post',
-      component: SinglePost
-    }]
-  }]
-}, // {
-//     path: '/post/create',
-//     component: CreatePostComponent,
-//     name: 'createPost',
-//     meta: {
-//         layout: 'post'
-//     }
-// },
-// {
-//     path: '/tag/create',
-//     component: CreateTagComponent,
-//     name: 'createTag',
-//     meta: {
-//         layout: 'post'
-//     }
-// },
-// {
-//     path: '/category/create',
-//     component: CreateCategoryComponent,
-//     name: 'createCategory',
-//     meta: {
-//         layout: 'post'
-//     }
-// },
-{
+      // layout: 'post',
+      content: 'SinglePost'
+    } // children: [
+    //     {
+    //         path: ':slug',
+    //         name: 'Show-post',
+    //         component: SinglePost,
+    //     }
+    // ]
+
+  }, {
+    path: 'category-:slug',
+    name: 'TheListCategoryPosts',
+    component: LayoutWithBanner,
+    meta: {
+      content: 'TheListCategoryPosts'
+    }
+  } // {
+  //     path: 'category-:slug',
+  //     name: 'Category-posts',
+  //     component: LayoutWithBanner,
+  // }
+  ]
+}, {
   path: '/admin',
   component: AdminTemplate,
   name: 'Admin',
@@ -2315,7 +2306,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
     tags: null,
     categories: null,
     loading: false,
-    posts: false,
+    posts: [],
     post: false,
     cur_page: 1,
     last_page: 1
@@ -2337,7 +2328,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
   },
   mutations: {
     saveData: function saveData(state, data) {
-      // console.log(data)
+      console.log(data, 'saveData');
       state[data.name] = data.arr;
     },
     clearData: function clearData(state, name) {
@@ -2364,7 +2355,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
     }
   },
   actions: {
-    getPostsMainPage: function getPostsMainPage(_ref, obj) {
+    getListsElements: function getListsElements(_ref, obj) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit, dispatch, pageQuery, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -2385,8 +2376,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/".concat(obj.path, "?").concat(pageQuery)).then(function (response) {
                   if (response.data.errors) return {
                     errors: response.data.errors
-                  }; // console.log(response.data)
-
+                  };
+                  console.log(response.data, 'store');
                   commit('setCurrentPage', response.data.current_page);
                   commit('setLastPage', response.data.last_page);
                   return response.data.data;
@@ -77904,7 +77895,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Home_vue":1,"resources_js_views_layouts_PostLayout_vue":1,"resources_js_views_NotFound_vue":1,"resources_js_views_templates_AdminTemplate_vue":1,"resources_js_views_templates_BlogTemplate_vue":1,"resources_js_views_SinglePost_vue":1,"resources_js_views_admin_MainAdmin_vue":1,"resources_js_views_admin_posts_ListPosts_vue":1,"resources_js_views_admin_posts_CreatePost_vue":1,"resources_js_views_admin_tags_ListTags_vue":1,"resources_js_views_admin_tags_CreateTag_vue":1,"resources_js_views_admin_categories_CreateCategory_vue":1,"resources_js_views_admin_categories_ListCategories_vue":1,"resources_js_views_admin_posts_SinglePost_vue":1,"resources_js_views_layouts_HomeLayout_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Home_vue":1,"resources_js_views_layouts_LayoutWithBanner_vue":1,"resources_js_views_NotFound_vue":1,"resources_js_views_templates_AdminTemplate_vue":1,"resources_js_views_templates_BlogTemplate_vue":1,"resources_js_views_SinglePost_vue":1,"resources_js_views_admin_MainAdmin_vue":1,"resources_js_views_admin_posts_ListPosts_vue":1,"resources_js_views_admin_posts_CreatePost_vue":1,"resources_js_views_admin_tags_ListTags_vue":1,"resources_js_views_admin_tags_CreateTag_vue":1,"resources_js_views_admin_categories_CreateCategory_vue":1,"resources_js_views_admin_categories_ListCategories_vue":1,"resources_js_views_admin_posts_SinglePost_vue":1,"resources_js_views_layouts_HomeLayout_vue":1,"resources_js_views_blog_TheListCategoryPosts_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

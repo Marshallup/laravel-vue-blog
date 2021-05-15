@@ -14,7 +14,8 @@
         <section class="blog_area section-gap single-post-area">
             <div class="container">
                 <div class="row">
-                    <router-view></router-view>
+<!--                    <router-view></router-view>-->
+                    <component :is="setComponent"></component>
 
                     <sidebar-component></sidebar-component>
                 </div>
@@ -26,11 +27,25 @@
 
 <script>
 import SidebarComponent from "../../components/SidebarComponent";
+// import
 
 export default {
     name: "PostLayout",
+    computed: {
+      setComponent() {
+          return this.$route.meta.content
+      }
+    },
     components: {
-        SidebarComponent
+        SidebarComponent,
+        'TheListCategoryPosts': () => import('../blog/TheListCategoryPosts'),
+        'SinglePost': () => import('../SinglePost')
+    },
+    beforeMount() {
+        window.scrollTo(0,0);
+    },
+    mounted() {
+        console.log(this.$route)
     }
 }
 </script>

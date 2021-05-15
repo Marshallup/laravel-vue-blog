@@ -4,7 +4,7 @@ import store from '../store';
 
 const Home = () => import('../views/Home');
 // import PostLayout from "../views/layouts/PostLayout";
-const PostLayout = () => import('../views/layouts/PostLayout');
+const LayoutWithBanner = () => import('../views/layouts/LayoutWithBanner');
 const NotFound = () => import('../views/NotFound');
 
 const AdminTemplate = () => import('../views/templates/AdminTemplate');
@@ -21,6 +21,7 @@ const AdminShowCategories = () => import('../views/admin/categories/ListCategori
 const AdminSinglePost = () => import('../views/admin/posts/SinglePost');
 
 const HomeLayout = () => import('../views/layouts/HomeLayout');
+// const CategoryPosts = () => import('../views/Category-posts');
 // const SinglePost = () => import('../views/SinglePost');
 
 Vue.use(VueRouter);
@@ -50,48 +51,36 @@ const routes = [
 
             },
             {
-                path: 'post/',
-                name: 'Post-layout',
-                component: PostLayout,
+                path: 'post-:slug',
+                name: 'Show-post',
+                component: LayoutWithBanner,
                 meta: {
-                    layout: 'post',
-                    template: 'blog'
+                    // layout: 'post',
+                    content: 'SinglePost'
                 },
-                children: [
-                    {
-                        path: ':slug',
-                        name: 'Show-post',
-                        component: SinglePost,
-                    }
-                ]
+                // children: [
+                //     {
+                //         path: ':slug',
+                //         name: 'Show-post',
+                //         component: SinglePost,
+                //     }
+                // ]
             },
+            {
+                path: 'category-:slug',
+                name: 'TheListCategoryPosts',
+                component: LayoutWithBanner,
+                meta: {
+                    content: 'TheListCategoryPosts'
+                }
+            },
+            // {
+            //     path: 'category-:slug',
+            //     name: 'Category-posts',
+            //     component: LayoutWithBanner,
+            // }
         ]
     },
-    // {
-    //     path: '/post/create',
-    //     component: CreatePostComponent,
-    //     name: 'createPost',
-    //     meta: {
-    //         layout: 'post'
-    //     }
-    // },
-
-    // {
-    //     path: '/tag/create',
-    //     component: CreateTagComponent,
-    //     name: 'createTag',
-    //     meta: {
-    //         layout: 'post'
-    //     }
-    // },
-    // {
-    //     path: '/category/create',
-    //     component: CreateCategoryComponent,
-    //     name: 'createCategory',
-    //     meta: {
-    //         layout: 'post'
-    //     }
-    // },
     {
         path: '/admin',
         component: AdminTemplate,

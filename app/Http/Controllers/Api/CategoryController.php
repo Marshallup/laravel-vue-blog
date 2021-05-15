@@ -108,4 +108,9 @@ class CategoryController extends Controller
         return Category::withCount('posts')->orderBy('posts_count', 'desc')->get(3);
 //        return Category::with('posts')->all();
     }
+
+    public function getCategoryPosts($slug)
+    {
+        return Category::where('slug', $slug)->with('posts')->paginate(3);
+    }
 }

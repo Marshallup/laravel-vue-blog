@@ -30,7 +30,7 @@ export default {
         TheFooter,
         // HomeLayout,
         'HomeLayout': () => import('../layouts/HomeLayout'),
-        'PostLayout': () => import('../layouts/PostLayout'),
+        // 'PostLayout': () => import('../layouts/PostLayout'),
         // PostLayout
 
     },
